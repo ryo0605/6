@@ -32,18 +32,14 @@
         
         // 平行光源1
         var directionalLight1 = new THREE.DirectionalLight(0xffffff, 10);
-        directionalLight1.position.set(0, 10, 0);
+        directionalLight1.position.set(10, 10, 10);
         // シーンに追加
         scene.add(directionalLight1);
         // 平行光源2
         var directionalLight2 = new THREE.DirectionalLight(0x888888);
         directionalLight2.position.set(-10, -10, 10);
         // シーンに追加
-        //scene.add(directionalLight2);
-        // 半球光源を作成
-// new THREE.HemisphereLight(空の色, 地の色, 光の強さ)
-const light = new THREE.HemisphereLight(0x888888, 0x0000FF, 1.0);
-scene.add(light);
+        scene.add(directionalLight2);
 
         // helper
         const gridHelper = new THREE.GridHelper(2,10); // size, step
@@ -66,7 +62,7 @@ scene.add(light);
         //var material = new THREE.MeshPhongMaterial({ color: 0x0000ff, specular:0xffff00, shininess:4 });
         //var material = new THREE.MeshPhongMaterial({ color: 0x0000ff, emissive: 0xffff00, emissiveIntensity: 2 });
         //var material = new THREE.MeshToonMaterial({ color: 0x005555 });
-        var material = new THREE.MeshStandardMaterial({ color: 0x0005555, roughness:1});
+        var material = new THREE.MeshStandardMaterial({ color: 0x0005555, roughness:0.5});
 
 
 
