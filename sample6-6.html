@@ -40,6 +40,10 @@
         directionalLight2.position.set(-10, -10, 10);
         // シーンに追加
         //scene.add(directionalLight2);
+        // 半球光源を作成
+// new THREE.HemisphereLight(空の色, 地の色, 光の強さ)
+const light = new THREE.HemisphereLight(0x888888, 0x0000FF, 1.0);
+scene.add(light);
 
         // helper
         const gridHelper = new THREE.GridHelper(2,10); // size, step
