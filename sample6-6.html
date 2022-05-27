@@ -31,12 +31,12 @@
         const controls = new THREE.OrbitControls(camera, document.body); 
         
         // 平行光源1
-        var directionalLight1 = new THREE.DirectionalLight(0xffffff, 10);
+        var directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight1.position.set(10, 10, 10);
         // シーンに追加
         scene.add(directionalLight1);
         // 平行光源2
-        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
         directionalLight2.position.set(-10, -10, 10);
         // シーンに追加
         scene.add(directionalLight2);
@@ -62,7 +62,7 @@
         //var material = new THREE.MeshPhongMaterial({ color: 0x0000ff, specular:0xffff00, shininess:4 });
         //var material = new THREE.MeshPhongMaterial({ color: 0x0000ff, emissive: 0xffff00, emissiveIntensity: 2 });
         //var material = new THREE.MeshToonMaterial({ color: 0x005555 });
-        var material = new THREE.MeshStandardMaterial({ color: 0x0005555, roughness:0.5});
+        var material = new THREE.MeshStandardMaterial({ color: 0x008b8b, roughness:0.5});
 
 
 
@@ -91,7 +91,7 @@
 
         //cylinder1
         var cylinderGeometry = new THREE.CylinderGeometry( 0.1, 0.3, 1, 8 );
-        var cylinderMaterial = new THREE.MeshPhongMaterial( {color: 0x0000ff} );
+        //var cylinderMaterial = new THREE.MeshPhongMaterial( {color: 0x0000ff} );
         var cylinder1 = new THREE.Mesh( cylinderGeometry, material);//cylinderMaterial );
         cylinder1.scale.x = 0.5;
         cylinder1.scale.z = 2;
