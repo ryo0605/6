@@ -18,6 +18,8 @@
         var renderer = new THREE.WebGLRenderer();
         document.body.appendChild(renderer.domElement);
         renderer.setSize(width, height);
+        // レンダラー：シャドウを有効にする
+        renderer.shadowMap.enabled = true;
 
         // シーンを作成
         const scene = new THREE.Scene();
@@ -31,29 +33,43 @@
         const controls = new THREE.OrbitControls(camera, document.body); 
         
         // 平行光源1
-        var directionalLight1 = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight1.position.set(10, 10, 10);
+        var directionalLightM = new THREE.DirectionalLight(0xffffff,0.3);
+        directionalLightM.position.set(0, 10, -5);
+        directionalLightM.castShadow = true; 
+        //シーンに追加
+        scene.add(directionalLightM);
+
+        // 照明を作成
+        var light = new THREE.SpotLight(0xffffff, 10, 150, Math.PI / 20, 0.2);
+        light.position.set(0,10, -15);
+        //light.target.position.set( 0, 5, -100 );
+        // ライトに影を有効にする
+        light.castShadow = true;
+        light.shadow.mapSize.width = 2048;
+        light.shadow.mapSize.height = 2048;
+        scene.add(light);
+
+        // 平行光源(色、強さ）補助光源
+        var directionalLightS = new THREE.DirectionalLight(0xffffff,0.3);
+        directionalLightS.position.set(-1, -1, 1);
         // シーンに追加
-        scene.add(directionalLight1);
-        // 平行光源2
-        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
-        directionalLight2.position.set(-10, -10, 10);
-        // シーンに追加
-        scene.add(directionalLight2);
+        //scene.add(directionalLightS);
 
         // helper
-        const gridHelper = new THREE.GridHelper(2,10); // size, step
-        scene.add(gridHelper);
-        const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
-        scene.add(axisHelper);
+        //const gridHelper = new THREE.GridHelper(2,10); // size, step
+        //scene.add(gridHelper);
+        //const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
+        //scene.add(axisHelper);
 
         // 平面を作成
-        var planeGeometry = new THREE.PlaneGeometry(10,10,20,20); //縦、横、分割数、分割数
-        var planeMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00});
+        var planeGeometry = new THREE.PlaneGeometry(40,40); //縦、横、分割数、分割数
+        var planeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
         var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.receiveShadow = true; //影がつく
         plane.rotation.set( -Math.PI/2, 0, 0 );
-        plane.position.set(0,0,0);
+        plane.position.set(0,-5,-2);
         scene.add(plane);
+
 
         // いろいろなマテリアルの実験
         //var material = new THREE.MeshBasicMaterial({ color: 0x0000ff });
@@ -72,6 +88,7 @@
         var body = new THREE.Mesh( body_g, material);
         body.scale.z = 7;
         body.position.set(0,0,-1);
+        body.castShadow = true;
     
         //羽を作成
         var win_g = new THREE.SphereGeometry( 0.7, 32, 32 );
@@ -80,6 +97,7 @@
         wing.scale.x = 4;
         wing.scale.y = 0.2;
         wing.position.set(0,-0.25,-0.5);
+        wing.castShadow = true;
 
         //cockpit
         var cylinderGeometry = new THREE.CylinderGeometry( 0.1, 0.3, 0.5, 8 );
@@ -88,6 +106,7 @@
         cockpit.scale.z = 2;
         cockpit.scale.y = 0.5;
         cockpit.position.set( 0, 0.5, -0.5 );
+        cockpit.castShadow = true;
 
         //cylinder1
         var cylinderGeometry = new THREE.CylinderGeometry( 0.1, 0.3, 1, 8 );
@@ -97,6 +116,7 @@
         cylinder1.scale.z = 2;
         cylinder1.rotation.x = -0.2;
         cylinder1.position.set( 0, 0.5, -3 );
+        cylinder1.castShadow = true;
 
         //cylinder2
         var cylinderGeometry = new THREE.CylinderGeometry( 0.1, 0.3, 1, 8 );
@@ -106,6 +126,7 @@
         cylinder2.scale.z = 1.5;
         cylinder2.rotation.z = +1.5;
         cylinder2.position.set( -0.5, 0, -3 );
+        cylinder2.castShadow = true;
 
         //cylinder3
         var cylinderGeometry = new THREE.CylinderGeometry( 0.1, 0.3, 1, 8 );
@@ -115,6 +136,7 @@
         cylinder3.scale.z = 1.5;
         cylinder3.rotation.z = -1.5;
         cylinder3.position.set( 0.5, 0, -3 );
+        cylinder3.castShadow = true;
 
         //羽1を作成
         var win_g1 = new THREE.SphereGeometry( 2, 32, 32 );
@@ -124,6 +146,7 @@
         wing1.scale.z = 0.1;
         wing1.scale.y = 0.5;
         wing1.position.set(0, 0.5 ,0);
+        wing1.castShadow = true;
 
         //羽2を作成
         var win_g2 = new THREE.SphereGeometry( 2, 32, 32 );
@@ -134,6 +157,7 @@
         wing2.scale.y = 0.1;
         wing2.position.set(0.5,-0.2,0);
         wing2.rotation.z = -0.33;
+        wing2.castShadow = true;
 
         //羽1を作成
         var win_g3 = new THREE.SphereGeometry( 2, 32, 32 );
@@ -144,6 +168,7 @@
         wing3.scale.y = 0.1;
         wing3.position.set(-0.5,-0.2,0);
         wing3.rotation.z = +0.33;
+        wing3.castShadow = true;
 
         //ドーナッツ
         var torusGeometry = new THREE.TorusGeometry( 0.3, 0.1, 16, 32 );
@@ -151,6 +176,7 @@
         var torus = new THREE.Mesh( torusGeometry, material );
         torus.scale.z = 3;
         torus.position.set( 0, 0, 1);
+        torus.castShadow = true;
 
         //プロペラのオブジェクト
         const pro = new THREE.Group();
@@ -175,7 +201,7 @@
 
         //全体のオブジェクト
         const all = new THREE.Group();
-        all.add(plane);//平面を追加
+        //all.add(plane);//平面を追加
         all.add(airplane);
         all.position.set(0,0,0);//全体グループの原点の位置
         scene.add(all); 
